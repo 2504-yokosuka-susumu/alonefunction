@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class MessageService {
@@ -144,6 +141,14 @@ public class MessageService {
             message.setBranchId(result.getUser().getBranchId());
             message.setDepartmentId(result.getUser().getDepartmentId());
             message.setCreatedDate(result.getCreatedDate());
+
+            // 時間差
+            Date oldTime = result.getCreatedDate();
+            Date currentTime = new Date();
+            long diffTime = currentTime.getTime() - oldTime.getTime();
+            String diffTimeDate = String.valueOf(diffTime / (1000 * 60 * 60 * 24));
+
+            message.setDiffTime(diffTimeDate + "日前");
 
             messages.add(message);
         }

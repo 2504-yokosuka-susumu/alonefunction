@@ -68,7 +68,7 @@
             <p>本文 : <span th:text="${message.text}"/></p>
         </div>
         <div class="date">
-            <span th:text="${message.createdDate}"/>
+            <span th:text="${message.diffTime}"/>
         </div>
 <!--        権限を持っている場合
             （自分の投稿、総務人事部のアカウントでログインしている、同じ支社の営業・技術）
@@ -98,7 +98,7 @@
                         <p>コメント : <span th:text="${comment.text}"/></p>
                     </div>
                     <div class="date">
-                        <span th:text="${message.createdDate}"/>
+                        <span th:text="${message.diffTime}"/>
                     </div>
                     <div th:if="${session.loginId == comment.userId}">
                         <div class="delete-button">
