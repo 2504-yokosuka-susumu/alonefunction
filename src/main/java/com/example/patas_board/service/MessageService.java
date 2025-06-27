@@ -143,16 +143,43 @@ public class MessageService {
             message.setCreatedDate(result.getCreatedDate());
 
             // 時間差
-            Date oldTime = result.getCreatedDate();
-            Date currentTime = new Date();
-            long diffTime = currentTime.getTime() - oldTime.getTime();
-            String diffTimeDate = String.valueOf(diffTime / (1000 * 60 * 60 * 24));
-
-            message.setDiffTime(diffTimeDate + "日前");
+            String diffTime = getTime(result);
+            message.setDiffTime(diffTime);
 
             messages.add(message);
         }
         return messages;
+    }
+
+    // 時間の減算
+    private static String getTime(Message result) {
+
+        // 現在時刻と作成時刻の減算
+        Date oldTime = result.getCreatedDate();
+        Date currentTime = new Date();
+        long diffTime = currentTime.getTime() - oldTime.getTime();
+
+        // 秒
+        long seconds = diffTime / 1000;
+        if(seconds < 60){
+            return seconds + "秒前";
+        }
+
+        // 分
+        long minutes = seconds / 60;
+        if(minutes < 60) {
+            return minutes + "分前";
+        }
+
+        // 時
+        long hours = minutes / 60;
+        if(hours < 24) {
+            return hours + "時間前";
+        }
+
+        // 日
+        long days = hours / 24;
+        return days + "日前";
     }
 
     //投稿の削除
